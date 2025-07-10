@@ -1,0 +1,16 @@
+num_labels: 12
+special_tokens_mapping:
+  ORG: "<<ORG>>"
+  PER: "<<PER>>"
+  LOC: "<<LOC>>"
+  OTH: "<<OTH>>"
+  LOCpart: "<<LOCpart>>"
+  LOCderiv: "<<LOCderiv>>"
+  PERpart: "<<PERpart>>"
+  OTHpart: "<<OTHpart>>"
+  PERderiv: "<<PERderiv>>"
+  OTHderiv: "<<OTHderiv>>"
+  ORGpart: "<<ORGpart>>"
+  ORGderiv: "<<ORGderiv>>"
+special_tokens_begl: "<<"
+special_tokens_endl: ">>"

@@ -1,0 +1,19 @@
+defaults:
+  - config
+  - slurm_config
+  - _self_
+
+experiment:
+  run_name: ssa_task
+
+directories:
+  # When running on slurm (or via a dockerized version of this code) the data is not on the local file system.
+  data: /data/ssa
+
+monitoring:
+  metric: dev/tuple_f1_epoch
+
+dataset:
+  task: ssa
+  source: ssa
+  name: opener_en # Other options: darmstadt_unis or combined (combined straight up mixes both datasets for all splits)

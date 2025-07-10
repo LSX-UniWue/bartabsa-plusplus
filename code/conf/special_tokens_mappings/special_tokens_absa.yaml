@@ -1,0 +1,7 @@
+num_labels: 3
+special_tokens_mapping:
+  POS: "<<positive>>"
+  NEG: "<<negative>>"
+  NEU: "<<neutral>>"
+special_tokens_begl: "<<"
+special_tokens_endl: ">>"

@@ -1,0 +1,29 @@
+defaults:
+  - config
+  - slurm_config
+  - _self_
+
+experiment:
+  run_name: gabsa_task
+
+directories:
+  # When running on slurm (or via a dockerized version of this code) the data is not on the local file system.
+  data: /data/gabsa
+
+training:
+  # For the german tasks, 50 epochs are more than enough. (They already take a very long time to train anyway.)
+  max_epochs: 50
+  early_stop_patience: 50
+
+monitoring:
+  metric: dev/tuple_f1_epoch
+
+model:
+  # We use mbart for GABSa, because the data is in German.
+  base_model: facebook/mbart-large-50
+
+dataset:
+  task: gabsa
+  source:
+  name:
+  lang_code: de_DE

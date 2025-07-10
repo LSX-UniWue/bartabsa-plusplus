@@ -1,0 +1,10 @@
+num_labels: 6
+special_tokens_mapping:
+  ASP_BEGIN: "<<ASP>>"
+  OPN_BEGIN: "<<OPN>>"
+  HOL_BEGIN: "<<HOL>>"
+  POS: "<<positive>>"
+  NEG: "<<negative>>"
+  NEU: "<<neutral>>"
+special_tokens_begl: "<<"
+special_tokens_endl: ">>"

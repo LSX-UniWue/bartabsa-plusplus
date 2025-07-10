@@ -1,0 +1,14 @@
+num_labels: 10
+special_tokens_mapping:
+  PLACE: "<<place>>"
+  SPATIAL_ENTITY: "<<spatial-entity>>"
+  MOTION: "<<motion>>"
+  SPATIAL_SIGNAL: "<<spatial-signal>>"
+  MOTION_SIGNAL: "<<motion-signal>>"
+  PATH: "<<path>>"
+  NONMOTION_EVENT: "<<nonmotion-event>>"
+  QSLINK: "<<qs-link>>"
+  MOVELINK: "<<move-link>>"
+  OLINK: "<<o-link>>"
+special_tokens_begl: "<<"
+special_tokens_endl: ">>"

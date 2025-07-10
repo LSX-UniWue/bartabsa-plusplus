@@ -1,0 +1,15 @@
+defaults:
+  - config
+  - _self_
+
+# When running on slurm (or via a dockerized version of this code) the data is not on the local file system.
+# Therefore, we need to mount the data differently.
+directories:
+  data: /data/absa/pengb/json
+  checkpoints: /tmp/modelcheckpoints
+  logs: /tmp/logs
+  predictions: /tmp/predictions
+  heatmaps: /tmp/heatmaps
+
+experiment:
+  ignore_existing: true

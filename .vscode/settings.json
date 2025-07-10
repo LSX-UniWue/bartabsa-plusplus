@@ -1,0 +1,24 @@
+{
+    "sync-rsync.sites": [
+        // Example: Sync the code to your cluster
+        // Uncomment and modify the following template as needed
+        // {
+        //     "localPath": "${workspaceRoot}/code",
+        //     "remotePath": "your-cluster:/path/to/your/remote/project",
+        //     "deleteFiles": true,
+        // }
+        // The data should already be available on the cluster, so we don't need to sync it
+    ],
+    "sync-rsync.exclude": [
+        "outputs",
+        "output",
+        "logs",
+        "venv",
+        "wandb",
+        ".DS_Store",
+        "heatmaps",
+        "slurm/slurm_logs",
+        "__pycache__",
+        "*.pyc"
+    ]
+}

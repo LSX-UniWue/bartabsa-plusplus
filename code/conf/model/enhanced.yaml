@@ -1,0 +1,7 @@
+# @package model
+# Enhanced model configuration preset
+gating_mode: full_gating
+normalize_encoder_outputs: true
+attention_mechanism: custom
+use_rms_for_encoder_norm: false
+use_final_layer_norm: true

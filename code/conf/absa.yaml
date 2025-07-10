@@ -1,0 +1,19 @@
+defaults:
+  - config
+  - slurm_config
+  - _self_
+
+experiment:
+  run_name: absa_task
+
+directories:
+  # When running on slurm (or via a dockerized version of this code) the data is not on the local file system.
+  data: /data/absa/pengb/json
+
+monitoring:
+  metric: dev/tuple_f1_epoch
+
+dataset:
+  task: absa
+  source: pengb
+  name: 14lap

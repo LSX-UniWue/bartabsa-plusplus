@@ -1,0 +1,90 @@
+defaults:
+  - base_config # See: https://hydra.cc/docs/1.2/upgrades/1.0_to_1.1/automatic_schema_matching
+  - _self_
+  # I mean, who doesn't like colors? Let's make the logs colorful!
+  - override hydra/job_logging: colorlog
+  - override hydra/hydra_logging: colorlog
+
+# Experiment settings
+experiment:
+  project_name: bartabsa-reproduce
+  entity: your_wandb_entity # Replace with your wandb team name (or account name)
+  run_name: default
+  iteration: -1 # -1 means that the run is not part of a sweep
+  seed: 42
+  deterministic: false
+  debug: false
+  offline: false
+  ignore_existing: true # If false, the run will not be started if a run with the same name already exists (useful for multiple runs in one pod)
+  write_predictions: false
+  write_heatmaps: false
+  tensors_to_plot: ["H_e", "E_e", "C_d", "conc_e", "P_t"]
+  checkpoint_tmp_dir: null # Set this to a custom directory path to use for checkpoint temp files (HPC environments)
+
+directories:
+  # Correctly set for a local run. When running on slurm (or via a dockerized version of this code), consider using (a modified version of) the slurm_config.yaml instead.
+  data: ../data/absa/pengb/json
+  checkpoints: modelcheckpoints
+  logs: logs
+  predictions: predictions
+  heatmaps: heatmaps
+  special_tokens_mappings: conf/special_tokens_mappings
+
+training:
+  max_epochs: 100
+  batch_size: 16
+  num_workers: 10
+  precision: 32
+  accumulate_grad_batches: 1
+  check_val_every_n_epoch: 1
+  log_every_n_steps: 50
+  early_stop_patience: 100
+  use_last_checkpoint: false # If true the last checkpoint is used, otherwise the best checkpoint
+
+optimizer:
+  learning_rate: 5e-5
+  weight_decay: 0.01
+  gradient_clip:
+    value: 5.0 # Seems to be pretty high, but that's what the og implementation used
+    algorithm: norm
+
+monitoring:
+  metric: dev/tuple_f1_epoch
+  save_top_k: 1
+
+model:
+  alpha: 0.5
+  base_model: "facebook/bart-base"
+  decoder_model: null
+  dropout:
+    general: 0.1
+    attention: 0.0
+    encoder_mlp: 0.1
+  use_encoder_mlp: true
+  use_lr_scheduler: linear_warmup_only
+  encoder_mode: default
+  gating_mode: no_gating
+  attention_mechanism: none
+  attention_polling: mean
+  use_combined_output: false
+  decouple_models: false
+  normalize_encoder_outputs: false
+  use_final_layer_norm: false
+  rmsnorm_eps: 1e-6
+  use_rms_for_encoder_norm: false
+  dont_use_rms: false
+  use_dimension_normalization: false
+  use_value_matrix: false
+  randomize_encoder: false
+  randomize_decoder: false
+
+dataset:
+  task: absa
+  source: pengb # Other option: astev2
+  name: 14lap # Other options: 14res, 15res, 16res
+  remove_duplicates: true # The og implementation did not remove duplicates but this is more of a "bug" than a feature
+  fraction: 1.0
+  lang_code: en_XX
+  special_tokens_file: "" # When empty, assumes the name is in the format of "special_tokens_<dataset_name>.json" in the directory specified above
+  special_tokens_config: null #  This is not to be populated by the user, but by the code
+

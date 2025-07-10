@@ -1,0 +1,12 @@
+num_labels: 8
+special_tokens_mapping:
+  E_BEGIN: "<<entity-begin>>"
+  E_END: "<<entity-end>>"
+  TOPIC: "<<topic>>"
+  COMPARE: "<<compare>>"
+  RESULT: "<<result>>"
+  USAGE: "<<usage>>"
+  PART_WHOLE: "<<part-whole>>"
+  MODEL_FEATURE: "<<model-feature>>"
+special_tokens_begl: "<<"
+special_tokens_endl: ">>"

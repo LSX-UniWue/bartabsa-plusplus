@@ -1,0 +1,111 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ name }}
+  namespace: {{ namespace }}  # Replace with your namespace
+  labels:
+    run_name: {{ run_name }}
+spec:
+  template:
+    spec:
+      priorityClassName: {{ priority_class }}
+      containers:
+        - name: {{ name }}
+          image: your-registry/bartabsa-lightning:latest  # Replace with your container registry
+          imagePullPolicy: "Always"
+          env:
+            - name: WANDB_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: wandb-secret
+                  key: WANDB_API_KEY
+          resources:
+            limits:
+              nvidia.com/gpu: "1"
+              cpu: "8"
+              memory: "32Gi"
+          command: ["/bin/bash", "-c"]
+          args:
+            - |
+              set -e  # Exit immediately if a command exits with a non-zero status
+              cp -r /slow_data/* /data
+              echo "Copying done, listing /data:"
+              ls -la /data
+              cd /bartabsa-lightning
+              echo "Listing /bartabsa-lightning:"
+              ls -la
+              {% for i in range(iterations) %}
+              echo "Starting iteration {{ i }}"
+              python src/run.py {{ config }} experiment.iteration={{ i }} directories.checkpoints='/checkpoints'
+              if [ $? -ne 0 ]; then
+                echo "Iteration {{ i }} failed"
+                exit 1
+              fi
+              echo "Iteration {{ i }} completed successfully"
+              {% endfor %}
+              echo "All iterations completed successfully"
+          volumeMounts:
+            - mountPath: /bartabsa-lightning
+              name: localdir
+              subPath: {{ temp_folder }}
+            - mountPath: /slow_data
+              name: localdir
+              subPath: projects/data/bartabsa  # Update path as needed
+            - mountPath: /data
+              name: fastdata
+            {% if save_checkpoints %}
+            - mountPath: /checkpoints
+              name: localdir
+              subPath: {{ temp_folder }}/checkpoints
+            {% else %}
+            - mountPath: /checkpoints
+              name: cache
+            {% endif %}
+            - mountPath: /.cache/huggingface
+              name: cache
+            - mountPath: /dev/shm
+              name: dshm
+      imagePullSecrets:
+        - name: your-registry-secret  # Replace with your registry secret name
+      restartPolicy: "Never"
+      {% if use_node_selector %}
+      nodeSelector:
+        {{ node_selector }}
+      {% else %}
+      {% if gpu_type != "any" %}
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: gputype
+                    operator: In
+                    values:
+                      - {{ gpu_type }}
+      {% endif %}
+      {% endif %}
+      volumes:
+                - name: localdir
+          cephfs:
+            monitors:
+              - your.ceph.monitor.1,your.ceph.monitor.2  # Replace with your CephFS monitors
+            user: your_username  # Replace with your username
+            path: "/home/your_user"  # Replace with your home path
+            secretRef:
+              name: ceph-secret
+        - name: cache
+          emptyDir:
+            sizeLimit: 10Gi
+        {% if not save_checkpoints %}
+        - name: checkpoints
+          emptyDir:
+            sizeLimit: 30Gi
+        {% endif %}
+        - name: dshm
+          emptyDir:
+            medium: Memory
+            sizeLimit: 4Gi
+        - name: fastdata
+          emptyDir:
+            medium: Memory
+            sizeLimit: 5Gi
