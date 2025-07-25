@@ -246,14 +246,26 @@ If you use this code in your research, please cite our paper:
 Also consider citing the original BART-ABSA work:
 
 ```bibtex
-@misc{yan2021unifiedgenerativeframeworkaspectbased,
-      title={A Unified Generative Framework for Aspect-Based Sentiment Analysis}, 
-      author={Hang Yan and Junqi Dai and Tuo ji and Xipeng Qiu and Zheng Zhang},
-      year={2021},
-      eprint={2106.04300},
-      archivePrefix={arXiv},
-      primaryClass={cs.CL},
-      url={https://arxiv.org/abs/2106.04300}, 
+@inproceedings{yan-etal-2021-unified,
+    title = "A Unified Generative Framework for Aspect-based Sentiment Analysis",
+    author = "Yan, Hang  and
+      Dai, Junqi  and
+      Ji, Tuo  and
+      Qiu, Xipeng  and
+      Zhang, Zheng",
+    editor = "Zong, Chengqing  and
+      Xia, Fei  and
+      Li, Wenjie  and
+      Navigli, Roberto",
+    booktitle = "Proceedings of the 59th Annual Meeting of the Association for Computational Linguistics and the 11th International Joint Conference on Natural Language Processing (Volume 1: Long Papers)",
+    month = aug,
+    year = "2021",
+    address = "Online",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2021.acl-long.188/",
+    doi = "10.18653/v1/2021.acl-long.188",
+    pages = "2416--2429",
+    abstract = "Aspect-based Sentiment Analysis (ABSA) aims to identify the aspect terms, their corresponding sentiment polarities, and the opinion terms. There exist seven subtasks in ABSA. Most studies only focus on the subsets of these subtasks, which leads to various complicated ABSA models while hard to solve these subtasks in a unified framework. In this paper, we redefine every subtask target as a sequence mixed by pointer indexes and sentiment class indexes, which converts all ABSA subtasks into a unified generative formulation. Based on the unified formulation, we exploit the pre-training sequence-to-sequence model BART to solve all ABSA subtasks in an end-to-end framework. Extensive experiments on four ABSA datasets for seven subtasks demonstrate that our framework achieves substantial performance gain and provides a real unified end-to-end solution for the whole ABSA subtasks, which could benefit multiple tasks."
 }
 ```
 
