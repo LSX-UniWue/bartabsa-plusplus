@@ -211,7 +211,36 @@ See [CLUSTER_RUNNING.md](CLUSTER_RUNNING.md) for more information on how to run 
 If you use this code in your research, please cite our paper:
 
 ```bibtex
-tba
+@inproceedings{pfister-etal-2025-bartabsa,
+    title = "{BARTABSA}++: Revisiting {BARTABSA} with Decoder {LLM}s",
+    author = {Pfister, Jan  and
+      V{\"o}lker, Tom  and
+      Vlasjuk, Anton  and
+      Hotho, Andreas},
+    editor = "Fei, Hao  and
+      Tu, Kewei  and
+      Zhang, Yuhui  and
+      Hu, Xiang  and
+      Han, Wenjuan  and
+      Jia, Zixia  and
+      Zheng, Zilong  and
+      Cao, Yixin  and
+      Zhang, Meishan  and
+      Lu, Wei  and
+      Siddharth, N.  and
+      {\O}vrelid, Lilja  and
+      Xue, Nianwen  and
+      Zhang, Yue",
+    booktitle = "Proceedings of the 1st Joint Workshop on Large Language Models and Structure Modeling (XLLM 2025)",
+    month = aug,
+    year = "2025",
+    address = "Vienna, Austria",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2025.xllm-1.13/",
+    pages = "115--128",
+    ISBN = "979-8-89176-286-2",
+    abstract = "We revisit the BARTABSA framework for aspect-based sentiment analysis with modern decoder LLMs to assess the importance of explicit structure modeling today. Our updated implementation - BARTABSA++ - features architectural enhancements that boost performance and training stability.Systematic testing with various encoder-decoder architectures shows that BARTABSA++ with BART-Large achieves state-of-the-art results, even surpassing a finetuned GPT-4o model.Our analysis indicates the encoder{'}s representational quality is vital, while the decoder{'}s role is minimal, explaining the limited benefits of scaling decoder-only LLMs for this task. These findings underscore the complementary roles of explicit structured modeling and large language models, indicating structured approaches remain competitive for tasks requiring precise relational information extraction."
+}
 ```
 
 Also consider citing the original BART-ABSA work:
